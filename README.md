@@ -19,7 +19,11 @@
 
 ## Demo
 
-![Demo](assets/demo.gif)
+![Demo](https://github.com/wesleygoyette/wesfu_assets/blob/master/demo.gif?raw=true)
+
+### With Full Color Output (`--color`)
+
+![Color Demo](https://github.com/wesleygoyette/wesfu_assets/blob/master/demo-color.gif?raw=true)
 
 ## Getting Started
 
@@ -34,8 +38,8 @@
 Clone the repository:
 
 ```bash
-git clone https://github.com/wesleygoyette/facetime_v5
-cd facetime_v5
+git clone https://github.com/wesleygoyette/wesfu.git
+cd wesfu
 ```
 
 #### macOS Users
@@ -90,4 +94,13 @@ cargo build --release
 ## Roadmap
 
 * Adaptive bitrate control
-* Secure signaling (TLS)
+* Audio Support
+
+## Contact
+
+WeSFU is still an early prototype, and I’m excited to see where it goes next. If you’re curious about the project, want to contribute, or have any feedback — I’d love to hear from you.
+
+Feel free to reach out anytime:
+
+**Email:**
+[wesley.goyette@gmail.com](mailto:wesley.goyette@gmail.com)
