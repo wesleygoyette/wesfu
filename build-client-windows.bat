@@ -6,9 +6,8 @@ cargo --version >nul 2>&1
 if %errorlevel% neq 0 (
     echo Rust is not installed. Installing via rustup...
     
-    rem Try multiple download methods
     echo Attempting download with PowerShell...
-    powershell -Command "try { Invoke-WebRequest -Uri 'https://win.rustup.rs/x86_64' -OutFile 'rustup-init.exe' -UseBasicParsing } catch { exit 1 }"
+    powershell -Command "Invoke-WebRequest -Uri 'https://win.rustup.rs/x86_64' -OutFile 'rustup-init.exe' -UseBasicParsing"
     if %errorlevel% neq 0 (
         echo PowerShell download failed. Trying curl...
         curl -L https://win.rustup.rs/x86_64 -o rustup-init.exe
@@ -27,7 +26,6 @@ if %errorlevel% neq 0 (
         exit /b 1
     )
     
-    rem Refresh environment
     if exist "%USERPROFILE%\.cargo\env.bat" (
         call "%USERPROFILE%\.cargo\env.bat"
     ) else (
@@ -47,7 +45,7 @@ if %errorlevel% neq 0 (
     echo.
     echo MANUAL INSTALLATION REQUIRED:
     echo 1. Download LLVM from: https://github.com/llvm/llvm-project/releases
-    echo 2. Install to default location (C:\Program Files\LLVM)
+    echo 2. Install to default location
     echo 3. Add LLVM to your PATH during installation
     echo 4. Re-run this script after installation
     echo.
@@ -68,7 +66,7 @@ if %errorlevel% neq 0 (
     echo   2. Extract to C:\opencv
     echo   3. Add C:\opencv\build\x64\vc16\bin to your PATH
     echo.
-    echo Option 2 - vcpkg (if available):
+    echo Option 2 - vcpkg:
     echo   1. Install vcpkg: git clone https://github.com/Microsoft/vcpkg.git
     echo   2. Run: vcpkg install opencv[contrib]:x64-windows
     echo.
@@ -80,13 +78,11 @@ if %errorlevel% neq 0 (
     set OPENCV_MISSING=0
 )
 
-rem Set environment variables for LLVM
 for /f "delims=" %%i in ('where clang 2^>nul') do set CLANG_PATH=%%i
 if defined CLANG_PATH (
     for %%i in ("%CLANG_PATH%") do set LLVM_DIR=%%~dpi..
     set LIBCLANG_PATH=!LLVM_DIR!\lib
 ) else (
-    rem Fallback to common installation paths
     if exist "C:\Program Files\LLVM\lib" (
         set LIBCLANG_PATH=C:\Program Files\LLVM\lib
     ) else if exist "C:\tools\llvm\lib" (
@@ -94,7 +90,6 @@ if defined CLANG_PATH (
     )
 )
 
-rem Test C++ compilation capability
 echo Testing C++ compilation...
 echo #include ^<memory^> > test.cpp
 echo int main() { return 0; } >> test.cpp
@@ -103,7 +98,7 @@ if %errorlevel% equ 0 (
     echo C++ compilation test successful.
     del test.cpp test.exe
 ) else (
-    echo Warning: C++ compilation test failed. You may need to install Visual Studio Build Tools.
+    echo Warning: C++ compilation test failed.
     del test.cpp 2>nul
 )
 
@@ -138,3 +133,4 @@ if %errorlevel% neq 0 (
 echo Build complete.
 echo You can now run the client with:
 echo .\target\release\client.exe
+pause
