@@ -4,7 +4,7 @@
 #
 
 app = 'facetime-v5'
-primary_region = 'den'
+primary_region = 'dfw'
 
 [build]
 dockerfile = 'Dockerfile'
